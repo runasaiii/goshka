@@ -1,0 +1,9 @@
+.env
+
+/bin/
+api
+main
+
+*.log
+
+vendor/
