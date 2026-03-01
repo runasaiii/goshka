@@ -1,5 +1,4 @@
 package app
-
 import (
 	"context"
 	"fmt"
@@ -8,15 +7,16 @@ import (
 	"os"
 	"time"
 
-	"golang/internal/handlers"
-	"golang/internal/middleware"
-	"golang/internal/repository"
-	"golang/internal/repository/_postgres"
-	"golang/internal/usecase"
-	"golang/pkg/modules"
+	"practice2/internal/handlers"
+	"practice2/internal/middleware"
+	"practice2/internal/repository"
+	"practice2/internal/repository/_postgres"
+	"practice2/internal/usecase"
+	"practice2/pkg/modules"
 
 	"github.com/joho/godotenv"
 )
+
 
 func Run() {
 	if err := godotenv.Load(); err != nil {

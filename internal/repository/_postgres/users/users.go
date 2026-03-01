@@ -1,8 +1,8 @@
 package users
 import (
 	"fmt"
-	"golang/internal/repository/_postgres"
-	"golang/pkg/modules"
+	"practice2/internal/repository/_postgres"
+	"practice2/pkg/modules"
 	"time"
 )
 
@@ -45,23 +45,23 @@ func (r *Repository) GetUserByID(id int) (*modules.User, error) {
 	return &user, nil
 }
 
-func (r *Repository) CreateUser(u modules.User) (int, error) {
+func (r *Repository) CreateUser(user modules.User) (int, error) {
 	var id int
 	query := "INSERT INTO users (name, email, age) VALUES ($1, $2, $3) RETURNING id"
-	err := r.db.DB.QueryRow(query, u.Name, u.Email, u.Age).Scan(&id)
+	err := r.db.DB.QueryRow(query, user.Name, user.Email, user.Age).Scan(&id)
 	return id, err
 }
 
-func (r *Repository) UpdateUser(u modules.User) error {
+func (r *Repository) UpdateUser(user modules.User) error {
 	query := "UPDATE users SET name=$1, email=$2, age=$3 WHERE id=$4 AND deleted_at IS NULL"
-	res, err := r.db.DB.Exec(query, u.Name, u.Email, u.Age, u.ID)
+	res, err := r.db.DB.Exec(query, user.Name, user.Email, user.Age, user.ID)
 	if err != nil {
 		return err
 	}
 
 	count, _ := res.RowsAffected()
 	if count == 0 {
-		return fmt.Errorf("update failed: no rows affected (user with ID %d not found)", u.ID)
+		return fmt.Errorf("update failed: no rows affected (user with ID %d not found)", user.ID)
 	}
 	return nil
 }

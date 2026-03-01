@@ -2,8 +2,8 @@ package usecase
 import (
     "errors"
     "fmt"
-    "golang/internal/repository"
-    "golang/pkg/modules"
+    "practice2/internal/repository"
+    "practice2/pkg/modules"
 )
 
 

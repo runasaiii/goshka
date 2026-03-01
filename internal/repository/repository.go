@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"golang/internal/repository/_postgres"
-	"golang/internal/repository/_postgres/users"
-	"golang/pkg/modules"
+	"practice2/internal/repository/_postgres"
+	"practice2/internal/repository/_postgres/users"
+	"practice2/pkg/modules"
 )
 
 

@@ -1,8 +1,8 @@
 package handlers
 import (
     "encoding/json"
-    "golang/internal/usecase"
-    "golang/pkg/modules"
+    "practice2/internal/usecase"
+    "practice2/pkg/modules"
     "net/http"
     "strconv"
 )

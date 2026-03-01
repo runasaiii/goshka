@@ -1,0 +1,45 @@
+networks:
+  user-net:
+    driver: bridge
+
+services:
+  web-app:
+    container_name: web_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=aruna
+      - DB_PASSWORD=roro123
+      - DB_NAME=my_db
+      - DB_SSLMODE=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-net
+
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=aruna
+      - POSTGRES_PASSWORD=roro123
+      - POSTGRES_DB=my_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/migrations:/docker-entrypoint-initdb.d/ 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aruna -d my_db -h localhost || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - user-net
+
+volumes:
+  postgres_data:

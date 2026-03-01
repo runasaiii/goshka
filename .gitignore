@@ -1,9 +1,25 @@
-.env
-
 /bin/
-api
+myapp
 main
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+.env
+*.env.local
 
 *.log
 
 vendor/
+
+/pgdata/
+/postgres_data/
+
+.idea/
+.vscode/
+*.swp
+*.swo
+
+.cache/
