@@ -1,4 +1,4 @@
-module practice2
+module goshka
 
 go 1.24.0
 

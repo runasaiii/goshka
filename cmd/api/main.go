@@ -1,4 +1,5 @@
 package main
+
 import (
 	"context"
 	"log"
@@ -8,23 +9,33 @@ import (
 	"syscall"
 	"time"
 
-	"practice2/internal/handlers"
-	"practice2/internal/middleware"
-	"practice2/internal/repository/_postgres"
-	"practice2/internal/repository/_postgres/users"
-	"practice2/internal/usecase"
-	"practice2/pkg/modules"
+	"github.com/joho/godotenv"
+	"goshka/internal/handlers"
+	"goshka/internal/middleware"
+	"goshka/internal/repository/_postgres"
+	"goshka/internal/repository/_postgres/users"
+	"goshka/internal/usecase"
+	"goshka/pkg/modules"
 )
 
+func envOrDefault(key, def string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return def
+}
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env found, using system env")
+	}
 	cfg := &modules.PostgreConfig{
 		Host:        os.Getenv("DB_HOST"),
 		Port:        os.Getenv("DB_PORT"),
 		Username:    os.Getenv("DB_USER"),
 		Password:    os.Getenv("DB_PASSWORD"),
 		DBName:      os.Getenv("DB_NAME"),
-		SSLMode:     "disable",
+		SSLMode:     envOrDefault("DB_SSLMODE", "disable"),
 		ExecTimeout: 5 * time.Second,
 	}
 
@@ -39,6 +50,10 @@ func main() {
 	userHandler := handlers.NewUserHandler(userUsecase)
 
 	mux := http.NewServeMux()
+
+	mux.HandleFunc("/users/common-friends", userHandler.GetCommonFriends)
+	mux.HandleFunc("/users/paginated", userHandler.GetPaginatedUsers)
+	mux.HandleFunc("/users/cursor", userHandler.GetPaginatedUsersCursor)
 	mux.HandleFunc("/users", userHandler.GetAllUsers)
 	mux.HandleFunc("/user", userHandler.GetUserByID)
 	mux.HandleFunc("/user/create", userHandler.CreateUser)
@@ -51,7 +66,6 @@ func main() {
 	})
 
 	finalHandler := middleware.Logger(middleware.Auth(mux))
-
 
 	server := &http.Server{
 		Addr:    ":8080",

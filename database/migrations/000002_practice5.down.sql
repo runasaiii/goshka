@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS user_friends;
+
+ALTER TABLE users
+  DROP COLUMN IF EXISTS gender,
+  DROP COLUMN IF EXISTS birth_date,
+  DROP COLUMN IF EXISTS created_at;
