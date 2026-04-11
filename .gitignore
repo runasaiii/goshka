@@ -1,2 +1,30 @@
+# Бинарные файлы
+/cmd/app/main
+/app
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Переменные окружения
+.env
+.env.local
+
+# Зависимости
+/vendor/
+
+# Логи и временные файлы
+*.log
+/tmp/
+/bin/
+
+# Файлы редакторов
+.vscode/
 .idea/
-practice2/
+*.swp
+*.swo
+
+# Файлы системы
+.DS_Store
+Thumbs.db
