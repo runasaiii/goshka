@@ -9,13 +9,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/joho/godotenv"
 	"goshka/internal/handlers"
 	"goshka/internal/middleware"
 	"goshka/internal/repository/_postgres"
 	"goshka/internal/repository/_postgres/users"
 	"goshka/internal/usecase"
 	"goshka/pkg/modules"
+
+	"github.com/joho/godotenv"
 )
 
 func envOrDefault(key, def string) string {
